@@ -1,0 +1,3 @@
+#!/bin/bash
+su -c "modprobe vboxdrv && modprobe vboxnetadp && modprobe vboxnetflt && modprobe vboxpci"
+VirtualBox
