@@ -1,0 +1,39 @@
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+"	This is my vimrc config made with passion end painful 
+"	hours of work I hop you'll apriciete it
+"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+"
+"
+"
+"
+"GENERAL SETTINGS
+"
+"
+"
+"
+"
+"The local leader
+let maploclleader = "-"
+"
+"Settings for 80 character max
+set colorcolumn=+1
+set textwidth=80
+set expandtab
+"
+"
+"Settings for tabspace as 8 character like you want
+set shiftwidth=8
+set tabstop=8
+"
+"
+"
+"
+"REMAPED  KEYS
+"
+"Clipbord integration with xclip
+vnoremap <silent> <Leader>c :!xclip -f -sel clip<CR>
+nnoremap <silent> <Leader>v :r!xclip -o -sel clip<CR>
+"Reload vim config
+nnoremap <silent> <Leader>sv :source $MYVIMRC <CR>
+
+
