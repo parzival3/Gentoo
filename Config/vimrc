@@ -20,6 +20,13 @@ set colorcolumn=+1
 set textwidth=80
 set expandtab
 "
+"Backup folder
+set backupdir=~/.cache/vim/backup
+set directory=~/.cache/vim/backup
+"
+"
+"Searcing commands
+nnoremap <silent><localleader>h :nohlsearch<cr>
 "
 "Settings for tabspace as 8 character like you want
 set shiftwidth=8
@@ -33,7 +40,30 @@ set tabstop=8
 "Clipbord integration with xclip
 vnoremap <silent> <Leader>c :!xclip -f -sel clip<CR>
 nnoremap <silent> <Leader>v :r!xclip -o -sel clip<CR>
+"
+"
+"
 "Reload vim config
 nnoremap <silent> <Leader>sv :source $MYVIMRC <CR>
+nnoremap <silent> <Leader>ev :split $MYVIMRC <CR>
+"
+"
+"
+"Navigation Command
+nnoremap L A <esc>
+inoremap jò <esc>
+vnoremap j; <esc>
 
+inoremap <Left> <nop>
+inoremap <Right> <nop>
+inoremap <Up> <nop>
+inoremap <Down> <nop>
+
+"
+"
+"Navigazione tra le schede
+nnoremap <silent> <c-k> :wincmd k<cr>
+nnoremap <silent> <c-l> :wincmd l<cr>
+nnoremap <silent> <c-h> :wincmd h<cr>
+nnoremap <silent> <c-j> :wincmd j<cr>
 
