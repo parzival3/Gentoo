@@ -69,4 +69,10 @@ nnoremap <silent> <c-k> :wincmd k<cr>
 nnoremap <silent> <c-l> :wincmd l<cr>
 nnoremap <silent> <c-h> :wincmd h<cr>
 nnoremap <silent> <c-j> :wincmd j<cr>
+"
+"
+"
+"
+"
+"
 
