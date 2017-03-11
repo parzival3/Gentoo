@@ -9,6 +9,7 @@
 "GENERAL SETTINGS
 "
 set number
+filetype on
 "
 "
 "
