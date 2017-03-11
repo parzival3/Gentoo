@@ -3,7 +3,7 @@ nnoremap <leader>a : call <SID>CompileVhdl()<CR>
 
 func! s:CompileVhdl()
 	exec "w"
-	exec "!ghdl -a --std=08 %"
+	exec "!ghdl -a  %"
         exec "!rm -f :r.o .wrk"
 endfunc
 
