@@ -12,6 +12,7 @@ set number
 filetype on
 filetype plugin on
 set nohlsearch
+colorscheme solarized
 "
 "
 "
