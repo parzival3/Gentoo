@@ -10,7 +10,7 @@
  *
  *  Read main() to configure your new status Bar.
  *
- *  compile: gcc -o barM barM.c -O2 -s -lX11
+ *  compile: gcc -o barM barM.c -O2 -s -lX11 -lasound
  *  
  *  mv barM /usr/local/bin/
  */
@@ -23,6 +23,8 @@
 #include <X11/Xlib.h>
 #include <sys/utsname.h>
 #include <sys/sysinfo.h>
+#include <alsa/asoundlib.h>
+#include <alsa/control.h>
 
 /*
  *  Put this in your .xinitrc file: 
@@ -32,16 +34,19 @@
  */
 
 #define VERSION "0.12"
-#define TIME_FORMAT "%H:%M) (%d-%m-%Y"
+#define TIME_FORMAT "%H:%M ** %d-%m-%Y"
 #define MAXSTR  1024
 
 static const char * date(void);
 static const char * getuname(void);
 static const char * ram(void);
 static void XSetRoot(const char *name);
+static const char * get_vol(void);
+static const char * battery(void);
+
 /*Append here your functions.*/
 static const char*(*const functab[])(void)={
-        ram,date
+        date,get_vol,battery
 };
 
 int main(void){
@@ -53,7 +58,8 @@ int main(void){
                 perror("uname failed");
                 return 1;
         }
-        ret=snprintf(status,sizeof(status),"(%s) ",u.release);}
+        //ret=snprintf(status,sizeof(status),"(%s) ",u.release);
+        }
         char*off=status+ret;
         if(off>=(status+MAXSTR)){
                 XSetRoot(status);
@@ -104,5 +110,64 @@ static void XSetRoot(const char *name){
         XSync(display, 0);
 
         XCloseDisplay(display);
+}
+
+static const char * get_vol(void)
+{
+    static char value[MAXSTR];
+    int vol;
+    snd_hctl_t *hctl;
+    snd_ctl_elem_id_t *id;
+    snd_ctl_elem_value_t *control;
+
+// To find card and subdevice: /proc/asound/, aplay -L, amixer controls
+    snd_hctl_open(&hctl, "hw:0", 0);
+    snd_hctl_load(hctl);
+
+    snd_ctl_elem_id_alloca(&id);
+    snd_ctl_elem_id_set_interface(id, SND_CTL_ELEM_IFACE_MIXER);
+
+// amixer controls
+    snd_ctl_elem_id_set_name(id, "Master Playback Volume");
+
+    snd_hctl_elem_t *elem = snd_hctl_find_elem(hctl, id);
+
+    snd_ctl_elem_value_alloca(&control);
+    snd_ctl_elem_value_set_id(control, id);
+
+    snd_hctl_elem_read(elem, control);
+    vol = (int)snd_ctl_elem_value_get_integer(control,0);
+
+    snd_hctl_close(hctl);
+    snprintf(value, sizeof(value),"M vol %d", vol);
+    return value;
+}
+
+static const char * battery(void)
+{
+	static char path[MAXSTR], line[MAXSTR] = {'\0'};
+	FILE *fd;
+
+	//memset(line, 0, sizeof(line));
+
+	snprintf(path, sizeof(path), 
+                        "%s/%s", "/sys/class/power_supply/BAT0", "status");
+	fd = fopen(path, "r");
+
+	if (fd == NULL)
+        {
+	        snprintf(line, sizeof(line), "%s", "No File");
+		return line;
+        }
+
+	if (fgets(line, sizeof(line)-1, fd) == NULL)
+        {
+	        snprintf(line, sizeof(line), "%s", "No status");
+		return line;
+        }
+
+	fclose(fd);
+
+        return line;
 }
 
