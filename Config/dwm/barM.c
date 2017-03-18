@@ -145,14 +145,20 @@ static const char * get_vol(void)
 
 static const char * battery(void)
 {
-	static char path[MAXSTR], line[MAXSTR] = {'\0'};
+	static char filename[MAXSTR], line[MAXSTR] = {'\0'};
+        static char temp[MAXSTR] = {'\0'};
+        static const char max[] = "charge_full";
+        static const char charge[] = "charge_now";
+        static const char path[] = "/sys/class/power_supply/BAT0";
+        static const char status[] = "status";
+        double value = 0;
 	FILE *fd;
 
 	//memset(line, 0, sizeof(line));
 
-	snprintf(path, sizeof(path), 
-                        "%s/%s", "/sys/class/power_supply/BAT0", "status");
-	fd = fopen(path, "r");
+	snprintf(filename, sizeof(filename), "%s/%s", path, status);
+
+	fd = fopen(filename, "r");
 
 	if (fd == NULL)
         {
@@ -167,6 +173,43 @@ static const char * battery(void)
         }
 
 	fclose(fd);
+
+        snprintf(filename, sizeof(filename), "%s/%s", path, max);
+	fd = fopen(filename, "r");
+	if (fd == NULL)
+        {
+	        snprintf(temp, sizeof(temp), "%s", "No File");
+		return temp;
+        }
+
+	if (fgets(temp, sizeof(temp)-1, fd) == NULL)
+        {
+	        snprintf(temp, sizeof(temp), "%s", "No max battery");
+		return temp;
+        }
+
+        value = atof(temp);
+
+	fclose(fd);
+
+
+        snprintf(filename, sizeof(filename), "%s/%s", path, charge);
+	fd = fopen(filename, "r");
+	if (fd == NULL)
+        {
+	        snprintf(temp, sizeof(temp), "%s", "No File");
+		return temp;
+        }
+
+	if (fgets(temp, sizeof(temp)-1, fd) == NULL)
+        {
+	        snprintf(temp, sizeof(temp), "%s", "No max charge");
+		return temp;
+        }
+
+        value = 100.0 / (value / atof(temp));
+        snprintf(temp, sizeof(temp), "-- %.1f", value);
+        strcat(line, temp);
 
         return line;
 }
