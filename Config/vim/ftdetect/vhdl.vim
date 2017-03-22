@@ -14,7 +14,7 @@ augroup END
 
 func! s:Createindent()
 	execute "0r ~/.vim/skeleton/skeleton-vhdl.vim"
-	execute "1," . 2 . "g#File Name:\.\*#s#\#File Name: " .expand("%")
+	execute "1," . 2 . "g#File Name:\.\*#s#\#File Name: " .expand("%:t:r")
 	execute "1," . 7 . "g#Created:\.\*#s#\#Created: " .strftime("%d\-%m\-%Y")
         execute "1," . 17
 endfunc
