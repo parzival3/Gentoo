@@ -15,6 +15,7 @@ set nohlsearch
 colorscheme solarized
 set relativenumber
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+set spelllang=it,en
 "
 "
 "

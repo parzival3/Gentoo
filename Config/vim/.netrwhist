@@ -1,6 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_cnt =6
 let g:netrw_dirhist_1='/home/enrico/Matlab_2012'
 let g:netrw_dirhist_2='/home/enrico/Git/Gentoo/Config/vim/ftplugin'
 let g:netrw_dirhist_3='/home/enrico/Downloads'
 let g:netrw_dirhist_4='/home/osboxes/Gentoo/Config/vim/ftplugin'
+let g:netrw_dirhist_5='/home/enrico/Git/University_share/Elaborazione_Numerica'
+let g:netrw_dirhist_6='/home/enrico/Documents/Miscellanea'

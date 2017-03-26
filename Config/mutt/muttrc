@@ -1,0 +1,34 @@
+set sidebar_visible=yes
+set sidebar_width=30
+set sidebar_delim='|'
+set sidebar_shortpath = yes
+set editor='vim'
+
+set sort=threads
+set sort_aux=last-date-received
+
+set ssl_starttls=yes
+set ssl_force_tls=yes
+set imap_passive
+set mail_check=60
+set timeout=10
+
+set net_inc=5
+
+set net_inc=5
+macro index b '<enter-command>toggle sidebar_visible<enter><refresh>'
+macro pager b '<enter-command>toggle sidebar_visible<enter><redraw-screen>'
+
+bind index,pager \CN sidebar-next
+bind index,pager \CP sidebar-prev
+bind index,pager \CO sidebar-open
+
+source "gpg2 -dq ~/.my-pwds.gpg |"
+
+source /home/enrico/.mutt/mutt-colors-solarized-dark-16.muttrc
+
+#source "~/.mutt/Squola.conf"
+#folder-hook $folder 'source ~/.mutt/Squola.conf'
+
+source "~/.mutt/Personale.conf"
+folder-hook $folder 'source ~/.mutt/Personale.conf'
