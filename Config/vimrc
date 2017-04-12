@@ -12,7 +12,8 @@ set number
 filetype on
 filetype plugin on
 set nohlsearch
-colorscheme solarized
+"colorscheme solarized
+let g:solarized_termcolors=256
 set relativenumber
 set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 set spelllang=it,en

@@ -210,6 +210,7 @@ static const char * battery(void)
         value = 100.0 / (value / atof(temp));
         snprintf(temp, sizeof(temp), "-- %.1f", value);
         strcat(line, temp);
+
 	fclose(fd);
 
         return line;
