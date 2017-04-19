@@ -9,6 +9,7 @@
 "GENERAL SETTINGS
 "
 set number
+syntax on
 filetype on
 filetype plugin on
 set nohlsearch
