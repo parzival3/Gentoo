@@ -13,6 +13,8 @@ syntax on
 filetype on
 filetype plugin on
 set nohlsearch
+set wildmode=longest,list,full
+set wildmenu
 "colorscheme solarized
 let g:solarized_termcolors=256
 set relativenumber

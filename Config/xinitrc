@@ -1,5 +1,7 @@
 xrdb -merge .Xresources
 redshift &
+export PATH="$PATH:/home/enrico/.bin/"
+urxvtd -q -f -o &
 sh ~/.fehbg &
 ~/.dwm/barDwm &
 setxkbmap it &
