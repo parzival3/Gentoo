@@ -87,6 +87,10 @@ nnoremap <silent> <Up>     :resize -5<cr>
 nnoremap <silent> <Down>   :resize +5<cr>
 
 nnoremap <leader>tt <c-w>T %
+
+
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprevious<cr>
 "
 "
 "
