@@ -1,0 +1,2 @@
+#!/bin/bash
+.opt/altera/quartus/bin/quartus --64bit
