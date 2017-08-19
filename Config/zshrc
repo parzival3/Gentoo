@@ -10,6 +10,8 @@ export PATH="$PATH:/home/enrico/.bin/"
 export EDITOR='vim'
 export VISUAL='vim' 
 export TESI=/home/enrico/Git/Tesi
+export GIT=/home/enrico/Git
+export DWNL=/home/enrico/Downloads
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
