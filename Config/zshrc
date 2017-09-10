@@ -7,6 +7,7 @@ compinit
 promptinit; prompt gentoo
 export ZSH=/home/enrico/.oh-my-zsh
 export PATH="$PATH:/home/enrico/.bin/"
+export PATH="$PATH:/tmp/gcc-arm-none-eabi-6-2017-q2-update/bin"
 export EDITOR='vim'
 export VISUAL='vim' 
 export TESI=/home/enrico/Git/Tesi
@@ -95,7 +96,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias gentoo-update="su -c 'emerge-webrsync'"
 alias gentoo-upgrade="su -c 'emerge -av -uDU --with-bdeps=y @world'"
-alias gentoo-use-new="emerge -av --update --newuse --deep @world"
+alias gentoo-use-new="su -c 'emerge -av --update --newuse --deep @world'"
 alias spegni="su -c 'shutdown -h now'"
 alias connect="su -c '/etc/init.d/net.wlp2s0 start'"
 alias copy="xclip -f -sel clip"
