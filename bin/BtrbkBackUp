@@ -1,0 +1,11 @@
+#!/bin/bash
+if [ -h /dev/disk/by-uuid/01f24005-0fd1-436d-b062-6ce98e8da9d9 ]; then 
+        logger "Detected BackUp disk ready to mount" 
+        mount -t btrfs UUID=01f24005-0fd1-436d-b062-6ce98e8da9d9 /mnt/BackUp/
+        logger "Backup started"
+        btrbk -q -c /etc/btrbk/btrbk-laptop.conf run
+        logger "Backup finished"
+        umount UUID=01f24005-0fd1-436d-b062-6ce98e8da9d9
+        logger "Device unmounted"
+fi
+
