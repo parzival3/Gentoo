@@ -5,6 +5,7 @@ if [ -h /dev/disk/by-uuid/01f24005-0fd1-436d-b062-6ce98e8da9d9 ]; then
         logger "Backup started"
         btrbk -q -c /etc/btrbk/btrbk-laptop.conf run
         logger "Backup finished"
+        sync
         umount UUID=01f24005-0fd1-436d-b062-6ce98e8da9d9
         logger "Device unmounted"
 fi

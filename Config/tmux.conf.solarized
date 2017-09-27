@@ -44,8 +44,6 @@
     unbind " "
     bind " " next-window
 # ----------------------
-
-
 #### COLOUR (Solarized dark)
 
 # default statusbar colors
@@ -56,12 +54,11 @@ set-option -g status-attr default
 # default window title colors
 set-window-option -g window-status-fg brightblue #base0
 set-window-option -g window-status-bg default
-#set-window-option -g window-status-attr dim
+set-window-option -g window-status-attr dim
 
 # active window title colors
-#set-window-option -g window-status-current-fg brightred #orange
-#set-window-option -g window-status-current-bg default
-set-window-option -g window-status-current-format "#[fg=black, bg=green]⮀#[fg=black, bg=green] #I ⮁ #W #[fg=green, bg=black]⮀"
+set-window-option -g window-status-current-fg brightred #orange
+set-window-option -g window-status-current-bg default
 #set-window-option -g window-status-current-attr bright
 
 # pane border
@@ -79,11 +76,21 @@ set-option -g display-panes-colour brightred #orange
 # clock
 set-window-option -g clock-mode-colour green #green
 
-# show host name and IP address on left side of status bar
-    set -g status-left-length 70
-    set -g status-left "#[fg=green]: #h : #[fg=brightblue]#(curl icanhazip.com) #[fg=yellow]#(ifconfig en0 | grep 'inet ' | awk '{print \"en0 \" $2}') #(ifconfig en1 | grep 'inet ' | awk '{print \"en1 \" $2}') #[fg=red]#(ifconfig tun0 | grep 'inet ' | awk '{print \"vpn \" $2}') "
+# bell
+set-window-option -g window-status-bell-style fg=black,bg=red #base02, red
 
-# show session name, window & pane number, date and time on right side of
-# status bar
-    set -g status-right-length 60
-    set -g status-right "#[fg=blue]#S #I:#P #[fg=yellow]:: %d %b %Y #[fg=green]:: %l:%M %p :: #(date -u | awk '{print $4}')::"
+# colours for the active window
+set-window-option -g window-status-current-format "#[fg=black, bg=colour13]#[fg=colour7, bg=colour13] #I #W #[fg=colour13, bg=black]"
+# colours for the non active window
+set-window-option -g window-status-format "#[fg=colour7, bg=black] #I #W "
+# center the windows status 
+set -g status-justify centre
+set-window-option -g window-status-separator ""
+
+set -g status-left-length 70
+set -g status-left "#[fg=black, bg=green]⮀#[fg=black, bg=green] #h #[fg=green, bg=colour9]⮀ #[fg=black, bg=colour9]#(curl icanhazip.com) #[fg=colour9, bg=black]⮀"
+
+
+set -g status-right-length 60
+set -g status-right "#[fg=blue, bg=black]#[fg=white, bg=blue]#S #I:#P#[fg=yellow, bg=blue]#[fg=black, bg=yellow] %d %b %Y #[fg=black, bg=yellow]"
+
