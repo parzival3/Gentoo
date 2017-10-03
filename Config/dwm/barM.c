@@ -34,7 +34,7 @@
  */
 
 #define VERSION "0.12"
-#define TIME_FORMAT "\uE0B3  \uF017 %H:%M  \uE0B3  \uF073  %d-%m-%Y"
+#define TIME_FORMAT "\uE0B3 \uF017 %H:%M \uE0B3 \uF073 %d-%m-%Y"
 #define MAXSTR  2024
 
 static const char * date(void);
@@ -69,7 +69,7 @@ int main(void){
                 int left=sizeof(status)-ret,i;
                 char*sta=off;
                 for(i = 0; i<sizeof(functab)/sizeof(functab[0]); ++i ) {
-                        int ret=snprintf(sta,left,"%s ",functab[i]());
+                        int ret=snprintf(sta,left,"%s",functab[i]());
                         sta+=ret;
                         left-=ret;
                         if(sta>=(status+MAXSTR))/*When snprintf has to resort to truncating a string it will return the length as if it were not truncated.*/
@@ -147,15 +147,15 @@ static const char * get_vol(void)
 
         if( vol <= 100 && vol > 65 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF028 %d", vol);
+                snprintf(value, sizeof(value), "\uE0B3 \uF028%d", vol);
         }
         if( vol <= 65 && vol > 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF027 %d", vol);
+                snprintf(value, sizeof(value), "\uE0B3 \uF027%d", vol);
         }
         if( vol < 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF026 %d", vol);
+                snprintf(value, sizeof(value), "\uE0B3 \uF026%d", vol);
         }
     return value;
 }
@@ -166,10 +166,10 @@ static const char * battery(void)
         static char temp[MAXSTR] = {'\0'};
         static const char max[] = "charge_full";
         static const char charge[] = "charge_now";
+        static const char capacity[] = "capacity";
         static const char path[] = "/sys/class/power_supply/BAT0";
         static const char status[] = "status";
-        double value = 0;
-        double max_value = 0;
+        int value = 0;
 	FILE *fd;
 
 	//memset(line, 0, sizeof(line));
@@ -193,80 +193,56 @@ static const char * battery(void)
 	fclose(fd);
         if(strstr(line, "Full") != NULL)
         {
-                snprintf(line, sizeof(line), "\uE0B3   \uF1e6   ");
+                snprintf(line, sizeof(line), "\x02\uE0B3  \uF1e6 ");
         }
         else
         {
-                snprintf(line, sizeof(line), "\uE0B3  ");
+                snprintf(line, sizeof(line), "\uE0B3 ");
         }
-
-//      READING THE MAX CHARGE POSSIBLE FOR THIS TYPE OF BATTERY       
-        snprintf(filename, sizeof(filename), "%s/%s", path, max);
-	fd = fopen(filename, "r");
-	if (fd == NULL)
-        {
-	        snprintf(temp, sizeof(temp), "%s", "No File");
-		return temp;
-        }
-
-	if (fgets(temp, sizeof(temp)-1, fd) == NULL)
-        {
-	        snprintf(temp, sizeof(temp), "%s", "No max battery");
-		return temp;
-        }
-        max_value = atof(temp);
-
-	fclose(fd);
 
 //      GETTING THE CURRENT CHARGE VALUE       
-        snprintf(filename, sizeof(filename), "%s/%s", path, charge);
+        snprintf(filename, sizeof(filename), "%s/%s", path, capacity);
 	fd = fopen(filename, "r");
 	if (fd == NULL)
         {
-	        snprintf(temp, sizeof(temp), "%s", "No File");
+	        snprintf(temp, sizeof(temp), "%s", "No capacity file");
 		return temp;
         }
 
 	if (fgets(temp, sizeof(temp)-1, fd) == NULL)
         {
-	        snprintf(temp, sizeof(temp), "%s", "No max charge");
+	        snprintf(temp, sizeof(temp), "%s", "No capacity available");
 		return temp;
         }
-        
-//      IF THE CURRENT CHARGE IS GRATER THAN THE MAXIMUM THIS MEAN THAT THE
-//      BATTERY IS  100% CHARGED
-        value = atof(temp);
-        if( (value - max_value) > 0 )
-        {
-                snprintf(temp, sizeof(temp), "\uF240 %d", 100);
-                strcat(line, temp);
-	        fclose(fd);
-                return line;
-        }
-        value = (value * 100) / value;
-        if( value <= 100 && value > 85 )
-        {
-                snprintf(temp, sizeof(temp), "\uF240 %f\x01", value);
-        }
-        if( value <= 85 && value > 65 )
-        {
-                snprintf(temp, sizeof(temp), "\uF241 %f\x01", value);
-        }
-        if( value <= 65 && value > 45 )
-        {
-                snprintf(temp, sizeof(temp), "\uF242 %f\x01", value);
-        }
-        if( value <= 45 && value > 20 )
-        {
-                snprintf(temp, sizeof(temp), "\uF243 %f\x01", value);
-        }
-        if( value <= 20 )
-        {
-                snprintf(temp, sizeof(temp), "\x03\uF244 %f\x01", value);
-        }
 
+        value = atoi(temp); 
+
+        if( value > 85)
+        {
+                        snprintf(temp, sizeof(temp), " \uF240 %d ", value);
+        }
+        if(value <= 85 && value > 65)
+        {
+                        snprintf(temp, sizeof(temp), " \uF241 %d ", value);
+        }
+        if(value <= 65 && value > 45)
+        {
+                        snprintf(temp, sizeof(temp), " \uF242 %d ", value);
+        }
+        if(value <= 45 && value > 20)
+        {
+                        snprintf(temp, sizeof(temp), " \uF243 %d ", value);
+        }
+        if(value <= 20)
+        {
+                        snprintf(temp, sizeof(temp), " \uF244 %d ", value);
+        }
         strcat(line, temp);
+        //*temp = *line;
+        //strcpy(line, "\x02");
+        //strcat(line, temp);
         fclose(fd);
+
         return line;
 }
 

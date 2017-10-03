@@ -6,7 +6,7 @@ FILE=barM.c
 all: bar mv
 
 bar: ~/Git/Gentoo/Config/dwm/barM.c
-	$(CC) -o $(BAR) $(FILE) $(CFLAGS)
+	$(CC)  -o $(BAR) $(FILE) $(CFLAGS)
 mv:
 	mv $(BAR) ~/.dwm/barDwm
 

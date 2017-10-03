@@ -1,0 +1,23 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	0.0.0	//
+BAR	Makefile	/^BAR=barDwm$/;"	m
+CC	Makefile	/^CC=gcc$/;"	m
+CFLAGS	Makefile	/^CFLAGS=-O2 -s -lX11 -lasound$/;"	m
+FILE	Makefile	/^FILE=barM.c$/;"	m
+MAXSTR	barM.c	/^#define MAXSTR /;"	d	file:
+TIME_FORMAT	barM.c	/^#define TIME_FORMAT /;"	d	file:
+VERSION	barM.c	/^#define VERSION /;"	d	file:
+XSetRoot	barM.c	/^static void XSetRoot(const char *name){$/;"	f	typeref:typename:void	file:
+all	Makefile	/^all: bar mv$/;"	t
+bar	Makefile	/^bar: ~\/Git\/Gentoo\/Config\/dwm\/barM.c$/;"	t
+battery	barM.c	/^static const char * battery(void)$/;"	f	typeref:typename:const char *	file:
+date	barM.c	/^static const char * date(void){$/;"	f	typeref:typename:const char *	file:
+functab	barM.c	/^static const char*(*const functab[])(void)={$/;"	v	typeref:typename:const char * (* const[])(void)	file:
+get_vol	barM.c	/^static const char * get_vol(void)$/;"	f	typeref:typename:const char *	file:
+main	barM.c	/^int main(void){$/;"	f	typeref:typename:int
+mv	Makefile	/^mv:$/;"	t
+ram	barM.c	/^static const char * ram(void){$/;"	f	typeref:typename:const char *	file:

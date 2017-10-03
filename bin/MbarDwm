@@ -1,0 +1,4 @@
+#!/bin/bash
+(cd $GIT/Gentoo/Config/dwm/ ; vim barM.c ; make )
+pkill barDwm
+~/.dwm/barDwm&
