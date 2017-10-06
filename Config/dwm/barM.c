@@ -34,7 +34,7 @@
  */
 
 #define VERSION "0.12"
-#define TIME_FORMAT "\uE0B3 \uF017 %H:%M \uE0B3 \uF073 %d-%m-%Y"
+#define TIME_FORMAT "\x02\uE0B3\x06\uF017 %H:%M \x02\uE0B3\x07\uF073 %d-%m-%Y \x02"
 #define MAXSTR  2024
 
 static const char * date(void);
@@ -147,15 +147,15 @@ static const char * get_vol(void)
 
         if( vol <= 100 && vol > 65 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF028%d", vol);
+                snprintf(value, sizeof(value), "\uE0B3\x03\uF028\x02%d ", vol);
         }
         if( vol <= 65 && vol > 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF027%d", vol);
+                snprintf(value, sizeof(value), "\uE0B3\x04\uF027\x02%d ", vol);
         }
         if( vol < 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3 \uF026%d", vol);
+                snprintf(value, sizeof(value), "\uE0B3\x05\uF026\x02%d ", vol);
         }
     return value;
 }
@@ -169,6 +169,8 @@ static const char * battery(void)
         static const char capacity[] = "capacity";
         static const char path[] = "/sys/class/power_supply/BAT0";
         static const char status[] = "status";
+        static char capacity_string[MAXSTR] = {'\0'};
+        static char state_string[MAXSTR] = {'\0'};
         int value = 0;
 	FILE *fd;
 
@@ -193,11 +195,11 @@ static const char * battery(void)
 	fclose(fd);
         if(strstr(line, "Full") != NULL)
         {
-                snprintf(line, sizeof(line), "\x02\uE0B3  \uF1e6 ");
+                snprintf(state_string, sizeof(state_string), "\uE0B3 \uF1e6 ");
         }
         else
         {
-                snprintf(line, sizeof(line), "\uE0B3 ");
+                snprintf(state_string, sizeof(state_string), "\uE0B3 ");
         }
 
 //      GETTING THE CURRENT CHARGE VALUE       
@@ -219,30 +221,28 @@ static const char * battery(void)
 
         if( value > 85)
         {
-                        snprintf(temp, sizeof(temp), " \uF240 %d ", value);
+                        snprintf(capacity_string, sizeof(capacity_string), 
+                                " \x03\uF240\x02%d", value);
         }
         if(value <= 85 && value > 65)
         {
-                        snprintf(temp, sizeof(temp), " \uF241 %d ", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x03\uF241\x02%d", value);
         }
         if(value <= 65 && value > 45)
         {
-                        snprintf(temp, sizeof(temp), " \uF242 %d ", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF242\x02%d", value);
         }
         if(value <= 45 && value > 20)
         {
-                        snprintf(temp, sizeof(temp), " \uF243 %d ", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF243\x02%d", value);
         }
         if(value <= 20)
         {
-                        snprintf(temp, sizeof(temp), " \uF244 %d ", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x05\uF244\x02%d", value);
         }
-        strcat(line, temp);
-        //*temp = *line;
-        //strcpy(line, "\x02");
-        //strcat(line, temp);
+        strcat(state_string, capacity_string);
         fclose(fd);
 
-        return line;
+        return state_string;
 }
 

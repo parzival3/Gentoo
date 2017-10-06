@@ -9,9 +9,14 @@ CC	Makefile	/^CC=gcc$/;"	m
 CFLAGS	Makefile	/^CFLAGS=-O2 -s -lX11 -lasound$/;"	m
 FILE	Makefile	/^FILE=barM.c$/;"	m
 MAXSTR	barM.c	/^#define MAXSTR /;"	d	file:
+MAXSTR	native_status.c	/^#define MAXSTR /;"	d	file:
+MAXSTR	simple_file_open.c	/^#define MAXSTR /;"	d	file:
+NATB	Makefile	/^NATB=native_bar$/;"	m
+NATIVE	Makefile	/^NATIVE=native_status.c$/;"	m
 TIME_FORMAT	barM.c	/^#define TIME_FORMAT /;"	d	file:
 VERSION	barM.c	/^#define VERSION /;"	d	file:
 XSetRoot	barM.c	/^static void XSetRoot(const char *name){$/;"	f	typeref:typename:void	file:
+XSetRoot	native_status.c	/^static void XSetRoot(const char *name){$/;"	f	typeref:typename:void	file:
 all	Makefile	/^all: bar mv$/;"	t
 bar	Makefile	/^bar: ~\/Git\/Gentoo\/Config\/dwm\/barM.c$/;"	t
 battery	barM.c	/^static const char * battery(void)$/;"	f	typeref:typename:const char *	file:
@@ -19,5 +24,8 @@ date	barM.c	/^static const char * date(void){$/;"	f	typeref:typename:const char 
 functab	barM.c	/^static const char*(*const functab[])(void)={$/;"	v	typeref:typename:const char * (* const[])(void)	file:
 get_vol	barM.c	/^static const char * get_vol(void)$/;"	f	typeref:typename:const char *	file:
 main	barM.c	/^int main(void){$/;"	f	typeref:typename:int
+main	native_status.c	/^int main(void){$/;"	f	typeref:typename:int
+main	simple_file_open.c	/^void main(void)$/;"	f	typeref:typename:void
 mv	Makefile	/^mv:$/;"	t
+native	Makefile	/^native: $(NATIVE)$/;"	t
 ram	barM.c	/^static const char * ram(void){$/;"	f	typeref:typename:const char *	file:

@@ -1,23 +1,38 @@
+// vim: set ft=c: 
 /* See LICENSE file for copyright and license details. */
 /* appearance */
-fjfaòsffdf
 static const char *fonts[] = {
-	"Droid Sans:size=10"
+	"DejaVuSansMono:size=10"
 };
-static const char dmenufont[]       = "Droid Sans:size=10";
-static const char normbordercolor[] = "#444444";
+static const char dmenufont[]       = "InconsolataNerdFontC-Medium:size=11";
+static const char normbordercolor[] = "#1d1f21";
 static const char normbgcolor[]     = "#222222";
-static const char normfgcolor[]     = "#bbbbbb";
-static const char selbordercolor[]  = "#657B83";
-static const char selbgcolor[]      = "#002b36";
-static const char selfgcolor[]      = "#657b83";
-static const unsigned int borderpx  = 1;        /* border pixel of windows */
+static const char normfgcolor[]     = "#c5c8c6";
+static const char selbordercolor[]  = "#222222";
+static const char selbgcolor[]      = "#222222";
+//static const char selbgcolor[]      = "#707880";
+static const char selfgcolor[]      = "#c5c8c6";
+static const unsigned int borderpx  = 2;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 
+#define NUMCOLORS         7
+
+static const char colors[NUMCOLORS][MAXCOLORS][8] = {
+  // border   foreground background
+  { "#222222", "#c5c8c6", "#222222" },  // normal 1
+  { "#222222", "#6c71c4", "#222222" },  // nice purple 2
+  { "#222222", "#859900", "#222222" },  // battery normal green 3 
+  { "#222222", "#b58900", "#222222" },  // battery medium yellow 4
+  { "#222222", "#dc322f", "#222222" },  // battery low red 5
+  { "#222222", "#268bd2", "#222222" },  // nice blue 6
+  { "#222222", "#d33692", "#222222" }   // magenta
+  // add more here
+};
+
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4" };
+static const char *tags[] = { "\uF120 Tmux", "\uF269 Firefox", "\uF188 Virtualbox", "\uF1FC Inkscape", "\uF085 Other" ,};
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -25,20 +40,23 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",          NULL,       NULL,       0,            1,           -1 },
+	{ "URxvt",         NULL,       NULL,       1 << 0,       0,           -1 },
+	{ "Eclipse",       NULL,       NULL,       1 << 3,       1,           -1 },
+	{ "VirtualBox",    NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "Inkscape",      NULL,       NULL,       1 << 3,       0,           -1 },
 };
 
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = False;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "\uF0db",      tile },    /* first entry is default */
+	{ "\uF066",      NULL },    /* no layout function means floating behavior */
+	{ "\uF065",      monocle },
 };
 
 /* key definitions */
@@ -57,21 +75,25 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *lightup[] 	= { "xbacklight", "-inc", "5", NULL };
 static const char *lightdown[] 	= { "xbacklight", "-dec", "5", NULL  };
 static const char *dmenucmd[] 	= { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", normbgcolor, "-nf", normfgcolor, "-sb", selbgcolor, "-sf", selfgcolor, NULL };
-static const char *termcmd[]  	= { "/home/enrico/.bin/urxvt-tmux.sh", NULL };
-static const char *firefox[]  	= { "firefox-bin", NULL };
+static const char *termcmd[]  	= { "/home/enrico/.bin/st-tmux.sh", NULL };
+static const char *st[]  	= { "st", NULL };
+static const char *firefox[]  	= { "firefox", NULL };
+static const char *qute[]  	= { "qutebrowser", NULL };
 static const char *upvol[] 	= { "amixer", "set", "Master", "2+", NULL };
 static const char *downvol[] 	= { "amixer", "set", "Master", "2-", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_r,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = st } },
 	{ MODKEY,             		XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                      	XK_F12,    spawn,          {.v = lightup} },
 	{ MODKEY,                      	XK_F11,    spawn,          {.v = lightdown} },
  	{ MODKEY,              		XK_F3,	   spawn,          {.v = upvol } },
         { MODKEY,              		XK_F2,	   spawn,          {.v = downvol } },
-	{ MODKEY,			XK_f,      spawn,      	   {.v = firefox } },
+	{ MODKEY,			XK_f,      spawn,      	   {.v = qute } },
+	{ MODKEY,			XK_t,      spawn,      	   {.v = firefox } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
@@ -120,4 +142,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
