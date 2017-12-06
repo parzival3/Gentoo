@@ -5,6 +5,6 @@ redshift &
 export PATH="$PATH:/home/enrico/.bin/"
 sh ~/.fehbg &
 ~/.dwm/barDwm &
-setxkbmap it &
+setxkbmap us &
 xscreensaver -no-splash &
 exec dwm 

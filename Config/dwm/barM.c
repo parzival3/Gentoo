@@ -25,7 +25,12 @@
 #include <sys/sysinfo.h>
 #include <alsa/asoundlib.h>
 #include <alsa/control.h>
+#include <arpa/inet.h>
+#include <linux/wireless.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
 
+#define INTERFACE "wlp2s0"
 /*
  *  Put this in your .xinitrc file: 
  *
@@ -34,7 +39,7 @@
  */
 
 #define VERSION "0.12"
-#define TIME_FORMAT "\x02\uE0B3\x06\uF017 %H:%M \x02\uE0B3\x07\uF073 %d-%m-%Y \x02"
+#define TIME_FORMAT "\x06\uE0B3\x01\uF017 %H:%M \x06\uE0B3\x01\uF073 %d-%m-%Y \x06"
 #define MAXSTR  2024
 
 static const char * date(void);
@@ -43,10 +48,11 @@ static const char * ram(void);
 static void XSetRoot(const char *name);
 static const char * get_vol(void);
 static const char * battery(void);
+static const char * get_signal_strenght(void);
 
 /*Append here your functions.*/
 static const char*(*const functab[])(void)={
-        date,get_vol,battery
+        date,get_signal_strenght,get_vol,battery
 };
 
 int main(void){
@@ -147,15 +153,15 @@ static const char * get_vol(void)
 
         if( vol <= 100 && vol > 65 )
         {
-                snprintf(value, sizeof(value), "\uE0B3\x03\uF028\x02%d ", vol);
+                snprintf(value, sizeof(value), "\x06\uE0B3\x03\uF028\x01%d ", vol);
         }
         if( vol <= 65 && vol > 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3\x04\uF027\x02%d ", vol);
+                snprintf(value, sizeof(value), "\x06\uE0B3\x04\uF027\x01%d ", vol);
         }
         if( vol < 35 )
         {
-                snprintf(value, sizeof(value), "\uE0B3\x05\uF026\x02%d ", vol);
+                snprintf(value, sizeof(value), "\x06\uE0B3\x05\uF026\x01%d ", vol);
         }
     return value;
 }
@@ -193,13 +199,13 @@ static const char * battery(void)
         }
 
 	fclose(fd);
-        if(strstr(line, "Full") != NULL)
+        if(strstr(line, "Charging") != NULL)
         {
-                snprintf(state_string, sizeof(state_string), "\uE0B3 \uF1e6 ");
+                snprintf(state_string, sizeof(state_string), "\x06\uE0B3 \uF1e6 ");
         }
         else
         {
-                snprintf(state_string, sizeof(state_string), "\uE0B3 ");
+                snprintf(state_string, sizeof(state_string), "\x06\uE0B3 ");
         }
 
 //      GETTING THE CURRENT CHARGE VALUE       
@@ -222,23 +228,23 @@ static const char * battery(void)
         if( value > 85)
         {
                         snprintf(capacity_string, sizeof(capacity_string), 
-                                " \x03\uF240\x02%d", value);
+                                " \x03\uF240\x01%d", value);
         }
         if(value <= 85 && value > 65)
         {
-                        snprintf(capacity_string, sizeof(capacity_string), " \x03\uF241\x02%d", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x03\uF241\x01%d", value);
         }
         if(value <= 65 && value > 45)
         {
-                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF242\x02%d", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF242\x01%d", value);
         }
         if(value <= 45 && value > 20)
         {
-                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF243\x02%d", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x04\uF243\x01%d", value);
         }
         if(value <= 20)
         {
-                        snprintf(capacity_string, sizeof(capacity_string), " \x05\uF244\x02%d", value);
+                        snprintf(capacity_string, sizeof(capacity_string), " \x05\uF244\x01%d", value);
         }
         strcat(state_string, capacity_string);
         fclose(fd);
@@ -246,3 +252,39 @@ static const char * battery(void)
         return state_string;
 }
 
+static const char * get_signal_strenght()
+{
+	struct iwreq request;
+	struct iw_statistics *stats;
+	strcpy(request.ifr_name, INTERFACE);
+	int level = 0;
+	static char line[MAXSTR] = {'\0'};
+
+	// have to use socket fof ioctl 
+	int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    request.u.data.pointer = (struct iw_statistics *)malloc(sizeof(*stats));
+    request.u.data.length = sizeof(*stats);
+
+    if(ioctl(sockfd, SIOCGIWSTATS, &request) == -1)
+	{
+        //die with error, invalid interface
+        fprintf(stderr, "Invalid interface.\n");
+        return "\x05\uF1eb\x02 No interface";
+    }
+    else if(((struct iw_statistics *)request.u.data.pointer)->qual.updated & IW_QUAL_DBM){
+        //signal is measured in dBm and is valid for us to use
+        level=((struct iw_statistics *)request.u.data.pointer)->qual.level - 256;
+    }
+	close(sockfd);
+	if( level > -40)
+	{
+		snprintf(line, sizeof(line), "\uE0B3 \x03\uF1eb\x01%d [dB] ", level);
+	}
+	if( level > -70  && level < -40 ) 
+	{
+		snprintf(line, sizeof(line), "\uE0B3 \x04\uF1eb\x01%d [dB] ", level);
+	}
+	if( level < -70 )	
+		snprintf(line, sizeof(line), "\uE0B3 \x05\uF1eb\x01%d [dB] ", level);
+	return line;
+}

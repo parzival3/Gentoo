@@ -80,7 +80,7 @@ set-window-option -g clock-mode-colour green #green
 set-window-option -g window-status-bell-style fg=black,bg=red #base02, red
 
 # colours for the active window
-set-window-option -g window-status-current-format "#[fg=black, bg=colour13]#[fg=colour7, bg=colour13] #I #W #[fg=colour13, bg=black]"
+set-window-option -g window-status-current-format "#[fg=black, bg=colour194]#[fg=black, bg=colour194] #I #W #[fg=colour194, bg=black]"
 # colours for the non active window
 set-window-option -g window-status-format "#[fg=colour7, bg=black] #I #W "
 # center the windows status 
@@ -92,5 +92,5 @@ set -g status-left "#[fg=black, bg=green]⮀#[fg=black, bg=green] #h #[fg=green,
 
 
 set -g status-right-length 60
-set -g status-right "#[fg=blue, bg=black]#[fg=white, bg=blue]#S #I:#P#[fg=yellow, bg=blue]#[fg=black, bg=yellow] %d %b %Y #[fg=black, bg=yellow]"
+set -g status-right "#[fg=blue, bg=black]#[fg=colour231, bg=blue]#S #I:#P#[fg=yellow, bg=blue]#[fg=black, bg=yellow] %d %b %Y #[fg=black, bg=yellow]"
 
