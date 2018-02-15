@@ -1,0 +1,5 @@
+#!/bin/bash
+wmname LG3D
+/opt/Matlab/bin/matlab -desktop
+rm /home/enrico/java.log.*
+

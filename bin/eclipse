@@ -1,2 +1,2 @@
 #!/bin/bash
-~/.iot-kura-develop/eclipse/eclipse
+/opt/eclipse/eclipse/eclipse

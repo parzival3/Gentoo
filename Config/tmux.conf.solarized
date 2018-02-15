@@ -26,11 +26,10 @@
     bind y      copy-mode -e
     bind P      paste-buffer 
 
-    bind-key -t vi-copy 'v' begin-selection
-    bind-key -t vi-copy 'y' copy-selection
-    bind-key -t vi-copy 'r' rectangle-toggle
+    bind-key -Tcopy-mode-vi 'v' send -X begin-selection
+#    bind-key -Tcopy-mode-vi 'y' send -X copy-selection
 
-    bind-key -t vi-copy y copy-pipe "xclip -selection clipboard > /dev/null"
+    bind-key -Tcopy-mode-vi 'y' send -X copy-pipe "xclip -i -sel p -f | xclip -i -sel c" \; display-message "copied to system clipboard"
     bind-key p run "xclip -o -sel clip | tmux load-buffer - ; tmux paste-buffer"
 
     bind -n M-\ switch-client -Ep

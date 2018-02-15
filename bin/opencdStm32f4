@@ -1,5 +1,5 @@
 #!/bin/zsh
 openocd -f board/stm32f4discovery.cfg -f interface/stlink-v2.cfg & ;
-urxvtc -e bash -c "arm-none-eabi-gdb -x extra/gdb_cmds; killall openocd"
+st -e bash -c "arm-none-eabi-gdb -x extra/gdb_cmds; killall openocd"
 #killall openocd
 
