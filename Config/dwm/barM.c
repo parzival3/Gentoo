@@ -224,6 +224,7 @@ static const char * battery(void)
         }
 
         value = atoi(temp); 
+		value = (value > 100)? 100 : value;
 
         if( value > 85)
         {
