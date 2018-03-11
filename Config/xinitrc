@@ -4,7 +4,7 @@ export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswi
 redshift &
 export PATH="$PATH:/home/enrico/.bin/"
 sh ~/.fehbg &
-~/.dwm/barDwm &
+#~/.dwm/barDwm &
 setxkbmap us &
 xscreensaver -no-splash &
-exec dwm 
+exec i3 

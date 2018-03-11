@@ -56,10 +56,7 @@ bindsym $mod+Ctrl+m exec st -e 'alsamixer'
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
 
 # Start Applications
-bindsym $mod+Ctrl+b exec st -e 'bmenu'
-bindsym $mod+F2 exec palemoon
-bindsym $mod+F3 exec pcmanfm
-# bindsym $mod+F3 exec ranger
+bindsym $mod+F3 exec st -e 'ranger'
 bindsym $mod+Shift+F3 exec gksu pcmanfm
 bindsym $mod+F5 exec st -e 'mocp'
 bindsym $mod+t exec --no-startup-id pkill compton
@@ -70,6 +67,10 @@ bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
 bindsym $mod+Shift+Print --release exec --no-startup-id i3-scrot -s
 bindsym $mod+Shift+h exec xdg-open /usr/share/doc/manjaro/i3_help.pdf
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym XF86MonBrightnessDown exec xbacklight -10
+bindsym XF86MonBrightnessUp exec xbacklight +10
+bindsym XF86AudioLowerVolume exec amixer -q set Master 5-
+bindsym XF86AudioRaiseVolume exec amixer -q set Master 5+
 
 # focus_follows_mouse no
 
@@ -109,6 +110,7 @@ bindsym $mod+q split toggle
 
 # toggle fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+bindsym $mod+g exec google-chrome-stable
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -147,7 +149,7 @@ bindsym $mod+Ctrl+Left workspace prev
 set $ws1 1:
 set $ws2 2:
 set $ws3 3:
-set $ws4 4:
+set $ws4 4:
 set $ws5 5:
 set $ws6 6:
 set $ws7 7:
@@ -310,7 +312,7 @@ set_from_resource $term_color15    color15
 
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
-	font pango: Meslo LG M DZ Regular for Powerline 9 
+	font pango: Roboto Mono for Powerline 9
     #font pango:Roboto Mono for Powerline 10 
 	i3bar_command i3bar
 	status_command  ~/.i3/bar-call-script
@@ -338,7 +340,9 @@ bar {
         active_workspace   #595B5B #353836 #FDF6E3
         inactive_workspace #596B5B #54487A #EEE9D5
         binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
+        urgent_workspace   #16a085 #73D216 #E5201D
+
+
     }
 }
 
@@ -355,7 +359,7 @@ client.urgent			#F2DEDE		#F2DEDE		#578bc9
 #  client.focused_inactive #2F3D44 #2F3D44 #1ABC9C #454948
 #  client.unfocused        #2F3D44 #2F3D44 #1ABC9C #454948
 #  client.urgent           #CB4B16 #FDF6E3 #1ABC9C #268BD2
-  client.placeholder      #000000 #0c0c0c #ffffff #000000 
+client.placeholder      #000000 #0c0c0c #ffffff #000000 
 
   client.background       #2B2C2B
 

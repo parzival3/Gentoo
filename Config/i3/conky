@@ -10,8 +10,8 @@ override_utf8_locale yes
 TEXT
 [
 #Uptime
-   {"full_text":" " , "color" : "\#FF3800" ,"separator":false,"separator_block_width":6},\
-   {"full_text":"${exec sensors -u | grep "temp1_input" | tail -n 1 | sed "s/temp1_input: \([0-9]*\)/\1/g" } " , "color" : "\#FAFAFA" },
+   {"full_text":" " , "color" : "\#FF3800" ,"separator":false,"separator_block_width":6},\
+   {"full_text":"${exec ~/.i3/cpu_temp.sh}" , "color" : "\#FAFAFA" },
    
 
    {"full_text":" " , "color" : "\#baab6b" ,"separator":false,"separator_block_width":6},\
@@ -27,11 +27,11 @@ TEXT
    {"full_text":" " , "color" : "\#FF3800" ,"separator":false,"separator_block_width":6},\
    {"full_text":" ${exec echo $(curl ipinfo.io/ip)} " , "color" : "\#FAFAFA" },
 #Eternet
-   {"full_text":" ${if_up wlp4s5}" , "color" : "\#65d288" ,"separator":false,"separator_block_width":0},\
+   {"full_text":" ${if_up wlp2s0}" , "color" : "\#65d288" ,"separator":false,"separator_block_width":0},\
    {"full_text":" ${else}","separator":false,"separator_block_width":0},\
    {"full_text":" ${if_up enp3s0f1}" , "color" : "\#65d288" ,"separator":false,"separator_block_width":0},\
    {"full_text":" ${endif}${endif}","separator":false,"separator_block_width":0},\
-   {"full_text":" ${if_up wlp4s5}${addr wlp4s5}" , "color" : "\#FAFAFA", "separator":false,"separator_block_width":0},
+   {"full_text":" ${if_up wlp2s0}${addr wlp2s0}" , "color" : "\#FAFAFA", "separator":false,"separator_block_width":0},
    {"full_text":" ${else}","separator":false,"separator_block_width":0},\
    {"full_text":" ${if_up enp3s0f1}${addr enp3s0f1}" , "color" : "\#FAFAFA", "separator":false,"separator_block_width":0},
    {"full_text":" ${endif}${endif}"},\
@@ -42,8 +42,10 @@ TEXT
    {"full_text":" ","color":"\#B58900","separator":false,"separator_block_width":6},\
    {"full_text":"${time %a %b %d %Y}","color":"\#FAFAFA","separator":false},\
 #Time
-   {"full_text":" ","color":"\#FF3800","separator":false,"separator_block_width":6},\
+   {"full_text":"","color":"\#FF3800","separator":false,"separator_block_width":6},\
    {"full_text":"${time %H:%M}","color":"\#FAFAFA"},\
+
+	{"full_text": " ${exec ~/.i3/battery.sh | head -n 1}","color":"${exec ~/.i3/battery.sh | tail -n 1} " },\
 
 #Num lock
    {"full_text": "  ","color":
