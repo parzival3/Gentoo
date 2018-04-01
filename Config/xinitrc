@@ -1,7 +1,7 @@
-xrdb -merge .Xresources
-export _JAVA_AWT_WM_NONREPARENTING=1
-export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+#export _JAVA_AWT_WM_NONREPARENTING=1
+#export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 redshift &
+compton &
 export PATH="$PATH:/home/enrico/.bin/"
 sh ~/.fehbg &
 #~/.dwm/barDwm &
