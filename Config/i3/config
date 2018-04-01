@@ -310,41 +310,42 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
-# Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	font pango: Roboto Mono for Powerline 9
-    #font pango:Roboto Mono for Powerline 10 
-	i3bar_command i3bar
-	status_command  ~/.i3/bar-call-script
-	position bottom
-
-## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
-#	tray_output primary
-#	tray_output eDP1
-
-	bindsym button4 nop
-	bindsym button5 nop
-#   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
-
-    colors {
-        background #404040	
-        statusline #F9FAF9
-        separator  #73D216
-
-#                      border  backgr. text
-
-
-
-        focused_workspace  #F9FAF9 #6E56AF #DDDAEC
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #596B5B #54487A #EEE9D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #73D216 #E5201D
-
-
-    }
-}
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+# Start i4bar to display a workspace bar (plus the system information i3status if available)
+#bar {
+#	font pango: Roboto Mono for Powerline 9
+#    #font pango:Roboto Mono for Powerline 10 
+#	#i3bar_command i3bar
+#	#status_command  ~/.i3/bar-call-script
+#	position bottom
+#
+### please set your primary output first. Example: 'xrandr --output eDP1 --primary'
+##	tray_output primary
+##	tray_output eDP1
+#
+#	bindsym button4 nop
+#	bindsym button5 nop
+##   font xft:URWGothic-Book 11
+#	strip_workspace_numbers yes
+#
+#    colors {
+#        background #404040	
+#        statusline #F9FAF9
+#        separator  #73D216
+#
+##                      border  backgr. text
+#
+#
+#
+#        focused_workspace  #F9FAF9 #6E56AF #DDDAEC
+#        active_workspace   #595B5B #353836 #FDF6E3
+#        inactive_workspace #596B5B #54487A #EEE9D5
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #73D216 #E5201D
+#
+#
+#    }
+#}
 
 # hide/unhide i3status bar
 bindsym $mod+m bar mode toggle
@@ -381,7 +382,7 @@ smart_gaps on
 
 # Smart borders (draw borders around container only if it is not the only container on this workspace) 
 # on|no_gaps (on=always activate and no_gaps=only activate if the gap size to the edge of the screen is 0)
-smart_borders on
+#smart_borders on
 
 # Press $mod+Shift+g to enter the gap mode. Choose o or i for modifying outer/inner gaps. Press one of + / - (in-/decrement for current workspace) or 0 (remove gaps for current workspace). If you also press Shift with these keys, the change will be global for all workspaces.
 set $mode_gaps Gaps: (o) outer, (i) inner
