@@ -8,17 +8,25 @@
 ;=====================================================
 
 [colors]
-background = #404040
-background-alt = #444
-foreground = #dfdfdf
-foreground-my = #dad600
-foreground-alt = #555
-primary = #6E56AF
-secondary = #73D216
-alert = #bd2c40
+orange = #d79921
+darkgray = #8a8a8a
+white = #f9f5d7
+gray = #585858
+black = #090909
+red = #db3f3f
+blue = #95aec7
+yellow = #c7ae95
+green = #aec795
+background = #111313
+background-alt = #111313
+foreground = #f9f5d7
+foreground-alt = #f9f5d7
+primary = #111313
+secondary = #d79921
+alert = #db2f2f
 
 [bar/example]
-;monitor = ${env:MONITOR:HDMI-1}
+monitor = ${env:MONITOR:HDMI-1}
 height = 30
 fixed-center = true
 
@@ -46,7 +54,7 @@ font-2 = "Wuncon Siji:pixelsize=10;1"
 font-3 = "FontAwesome:pixelsize=10;1"
 
 modules-left = i3
-modules-right = xbacklight volume memory cpu wlan eth battery date powermenu
+modules-right = xbacklight pulseaudio memory cpu wlan eth battery date powermenu
 
 tray-position = right
 tray-padding = 2
@@ -226,6 +234,42 @@ format-underline = #FF2A98
 
 label = %date% %time%
 
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+; Sink to be used, if it exists (find using `pacmd list-sinks`, name field)
+; If not, uses default sink
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+; Use PA_VOLUME_UI_MAX (~153%) if true, or PA_VOLUME_NORM (100%) if false
+; Default: true
+use-ui-max = true
+; Available tags:
+;   <label-volume> (default)
+;   <ramp-volume>
+;   <bar-volume>
+format-volume = <ramp-volume> <label-volume>
+
+; Available tags:
+;   <label-muted> (default)
+;   <ramp-volume>
+;   <bar-volume>
+;format-muted = <label-muted>
+
+; Available tokens:
+;   %percentage% (default)
+;label-volume = %percentage%%
+
+; Available tokens:
+;   %percentage% (default)
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
 [module/volume]
 type = internal/alsa
 
